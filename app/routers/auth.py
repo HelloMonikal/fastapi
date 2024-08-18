@@ -10,12 +10,12 @@ router = APIRouter(prefix="/login", tags=["Authentication"])
 @router.post("/",response_model=schemas.Token)
 def login(user_credential: OAuth2PasswordRequestForm = Depends(), db: Session = Depends(get_db)):
     user = db.query(models.User).filter(
-        models.User.email_name == user_credential.username
+        models.User.email == user_credential.username
     ).first()
     if user.id is None:
         raise HTTPException(status_code=status.HTTP_403_FORBIDDEN)
     if not util.verify(user_credential.password,user.password):
         raise HTTPException(status_code=status.HTTP_403_FORBIDDEN)
     
-    access_token = oauth2.create_token({'user_id':user.id,"user_email":user.email_name})
+    access_token = oauth2.create_token({'user_id':user.id,"user_email":user.email})
     return {"access_token":access_token,"token_type":"bearer"}

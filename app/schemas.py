@@ -6,19 +6,19 @@ from pydantic.types import conint
 
 
 class UserIn(BaseModel):
-    email_name:EmailStr
+    email:EmailStr
     password :str
 
 class UserOut(BaseModel):
     id:int
-    email_name:EmailStr
-    create_at:datetime
+    email:EmailStr
+    created_at:datetime
 
 
 class PostBase(BaseModel):
     title:str
     content:str    
-    create_at:datetime
+    created_at:datetime
     class config:
         orm_mode =True
 
