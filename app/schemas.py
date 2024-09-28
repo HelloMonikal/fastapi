@@ -45,3 +45,11 @@ class TokenData(BaseModel):
 class Vote(BaseModel):
     post_id:int
     dir:conint(le=1) # type: ignore
+
+
+class ProjectOut(BaseModel):
+    project_name:str
+    project_tag:str
+    created_at:datetime
+    update_at:datetime
+    description:str
