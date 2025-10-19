@@ -1,8 +1,9 @@
 from datetime import datetime
 from typing import Optional
+from fastapi.background import P
 from pydantic import BaseModel, EmailStr
 from pydantic.types import conint
-
+from typing import Literal
 
 
 class UserIn(BaseModel):
@@ -18,20 +19,28 @@ class UserOut(BaseModel):
 class PostBase(BaseModel):
     title:str
     content:str    
-    created_at:datetime
     class config:
         orm_mode =True
 
 
-class PostGet(PostBase):
+class PostCreate(PostBase):
     pass
+
+
+class Post(PostBase):
+    id:int
+    created_at:datetime
     owner_id:int
     owner:UserOut
+    class Config:
+        orm_mode = True
 
 
-class Updated(PostBase):
-    ...
-
+class PostOut(BaseModel):
+    Post:Post
+    votes:int
+    class Config:
+        orm_mode = True
 
 
 class Token(BaseModel):
@@ -44,12 +53,5 @@ class TokenData(BaseModel):
 
 class Vote(BaseModel):
     post_id:int
-    dir:conint(le=1) # type: ignore
+    dir:Literal[0,1]
 
-
-class ProjectOut(BaseModel):
-    project_name:str
-    project_tag:str
-    created_at:datetime
-    update_at:datetime
-    description:str
