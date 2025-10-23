@@ -9,12 +9,12 @@ from app.config import settings
 from app.oauth2 import create_token
 from app import models
 
-# SQLALCHEMY_DATABASE_URL  = f'postgresql://{settings.database_username}:{settings.database_password}@{settings.database_hostname}/{settings.database_name}_test'
+SQLALCHEMY_DATABASE_URL  = f'postgresql://{settings.database_username}:{settings.database_password}@{settings.database_hostname}/{settings.database_name}'
 
-TESTING_SQLALCHEMY_DATABASE_URL = 'postgresql://postgres:password@localhost:5432/fastapi'
+# TESTING_SQLALCHEMY_DATABASE_URL = 'postgresql://postgres:password@localhost:5432/fastapi'
 
 
-engine = create_engine(TESTING_SQLALCHEMY_DATABASE_URL)
+engine = create_engine(SQLALCHEMY_DATABASE_URL)
 TesstingSessionLocal = sessionmaker(autocommit=False,autoflush=False,bind=engine)
 
 
