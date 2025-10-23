@@ -12,10 +12,12 @@ def login(user_credential: OAuth2PasswordRequestForm = Depends(), db: Session = 
     user = db.query(models.User).filter(
         models.User.email == user_credential.username
     ).first()
-    if user.id is None:
-        raise HTTPException(status_code=status.HTTP_403_FORBIDDEN)
+
+    if not user:
+        raise HTTPException(status_code=status.HTTP_403_FORBIDDEN,detail='Invaild Credentials')
     if not util.verify(user_credential.password,user.password):
-        raise HTTPException(status_code=status.HTTP_403_FORBIDDEN)
+        raise HTTPException(status_code=status.HTTP_403_FORBIDDEN,detail='Invaild Credentials')
     
     access_token = oauth2.create_token({'user_id':user.id,"user_email":user.email})
+    
     return {"access_token":access_token,"token_type":"bearer"}

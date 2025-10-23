@@ -51,7 +51,7 @@ def get_post(db:Session = Depends(get_db)
 
  
 #to create post
-@router.post('/',status_code=status.HTTP_201_CREATED,response_model=schemas.PostBase)
+@router.post('/',status_code=status.HTTP_201_CREATED,response_model=schemas.Post)
 def create_post(new_post:schemas.PostBase,db:Session = Depends(get_db)
                 ,current_user:int = Depends(oauth2.get_current_user)):
     new_post = models.Post(owner_id=current_user,**new_post.model_dump())
@@ -61,7 +61,7 @@ def create_post(new_post:schemas.PostBase,db:Session = Depends(get_db)
     return new_post
 
 #to update post by id
-@router.put('/{id}',response_model=schemas.PostBase)
+@router.put('/{id}',response_model=schemas.Post)
 def update_post(id:int,new_post:schemas.PostBase,db:Session=Depends(get_db)
                  ,current_user:int=Depends(oauth2.get_current_user)):
     post_query = db.query(models.Post).filter(models.Post.id==id)

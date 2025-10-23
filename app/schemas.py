@@ -19,6 +19,7 @@ class UserOut(BaseModel):
 class PostBase(BaseModel):
     title:str
     content:str    
+    published: bool = True
     class config:
         orm_mode =True
 

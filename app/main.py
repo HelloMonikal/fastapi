@@ -4,7 +4,7 @@ from .database import engine
 from .routers import post,user,auth,vote,projects
 from fastapi.middleware.cors import CORSMiddleware
 
-# models.Base.metadata.create_all(bind=engine)
+models.Base.metadata.create_all(bind=engine)
 
 origins = ["*"]
 app = FastAPI()
@@ -20,7 +20,7 @@ app.add_middleware(
 
 @app.get("/")
 async def read_root():
-    return {"Hello": "World and Good luck!"}
+    return {"message": "Hello World and Good luck! and goodmorning!"}
 
 
 app.include_router(post.router)
