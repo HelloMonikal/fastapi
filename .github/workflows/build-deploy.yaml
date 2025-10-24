@@ -57,7 +57,7 @@ jobs:
           run: echo "Host ${{secrets.PROD_HOST}}"
 
         - name: deploy to ubuntu server
-          uses: aappleboy/ssh-action@v1
+          uses: appleboy/ssh-action@v1
           with:
             host: ${{secrets.PROD_HOST}}
             username: ${{secrets.PROD_USERNAME}}
